@@ -177,9 +177,12 @@ class Zombie:
         c2 = Condition("좀비가 공이 더 많은지?", self.is_zombie_more_ball)
         c3 = Condition("좀비가 공이 더 적은지?", self.is_zombie_less_ball)
 
+        # 좀비가 소년 근처 and 공이 더 많음 -> 추적
+        SEQ_move_boy = Sequence("추적함", c1, c2, a4)
 
-        SEQ_move_boy = Sequence("추적함", c1, c2, a4)  # 근처에 있고, 공이 많다면 소년으로 이동
-        SEQ_avoid_boy = Sequence("도망감", c1, c3, a6)  # 근처에 있고, 공이 적다면 소년에게서 반대로 이동
+        # 좀비가 소년 근처 and 공이 더 적음 -> 도망
+        SEQ_avoid_boy = Sequence("도망감", c1, c3, a6)
+
         SEL_chase_or_wander = Selector("추적 or 배회", SEQ_move_boy, SEQ_wander)
 
         # 좀비가 추적 or 도망 or 배회하도록!!!
